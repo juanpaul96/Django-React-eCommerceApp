@@ -5,9 +5,14 @@ import { Row, Col, Image, ListGroup, Button, Card } from "react-bootstrap";
 import Rating from "../components/Rating";
 import axios from "axios";
 
+import { useDispatch } from "react-redux";
+import { addItem } from "../cartSlice";
+
 function ProductSceen({ match }) {
   const { id } = useParams();
   const [product, setProduct] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchProduct() {
@@ -17,6 +22,7 @@ function ProductSceen({ match }) {
 
     fetchProduct();
   }, []);
+
   return (
     <div>
       <Link to={"/"} className="btn btn-light my-3">
@@ -70,6 +76,7 @@ function ProductSceen({ match }) {
                   className="btn-block"
                   disabled={product.countInStock == 0}
                   type="button"
+                  onClick={() => dispatch(addItem(product))}
                 >
                   Add to Cart
                 </Button>
